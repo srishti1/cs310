@@ -3,9 +3,12 @@ import java.util.*;
 
 
 //	 The FlightMap class, implemented in FlightMap.java, 
-//	 stores a map and provides operations that facilitate a search of 
+//	 stores a map and has functions that facilitate a search of 
 //   the map.
-
+/**
+*  The FlightMap class, implemented in FlightMap.java, 
+*   stores a map and has functions which gives  access to required information about the map
+*/
 public class FlightMap {
 	static HashMap<String,Integer> mapping;     //member variables
 	HashMap<Integer, String> reverseMapping;
@@ -22,12 +25,16 @@ public class FlightMap {
 	public FlightMap(Vector<String> flights) {    //constructor
 		FlightList= flights;	
 	}
-	public VectorClass BuildGraph() {                                   
+	/**
+	* returns three vectors which holds destinations, path and cost which are used to generate output
+	*/
+	public VectorClass BuildGraph() {   
+		
 		ListOfList = new ArrayList<ArrayList<DestAndValue>>();
 		mapping  = new HashMap<String,Integer>();
 		reverseMapping = new HashMap<Integer, String>();
 		String origin = FlightList.get(0);
-		createCity(FlightList.get(0)); //origin city
+		createCity(FlightList.get(0));
 		int value =0;
 		for (int i = 1; i < FlightList.size(); i++) {
 			String s= FlightList.get(i);
@@ -45,6 +52,9 @@ public class FlightMap {
 	
 		
 	}
+	/**
+	* calls a recursive function which finds path for all unvisited nodes
+	*/
 	private VectorClass runDfs(String origin) {
 		destinationStrings = new Vector<String>();
 		pathFromDestination = new Vector<String>();
@@ -82,6 +92,9 @@ public class FlightMap {
 	    	 vectorClass.setCostFromDestination(costFromDestination);
 	    	 return vectorClass;
 	}
+	/**
+	* reverses the string, used to display path in correct order
+	*/
 	private String reverse(String word) {
 	    char[] chs = word.toCharArray();
 //reverses the path to get them in right order
@@ -94,6 +107,9 @@ public class FlightMap {
 	    }
 	    return String.valueOf(chs);
 	}
+	/**
+	* recursive function which finds path from a given node to unvisited nodes
+	*/
 	private void Dfs(Integer start) {	
 		marked[start]=true;		//marked[0]=true;
 		
@@ -109,6 +125,10 @@ public class FlightMap {
 		
 		
 	}
+	/**
+	* returns stack with path from origin city to the given city
+	*/
+	
 	private 	Stack<Integer> pathTo(int index, int originIndex ) {
 		cost=0;
 		if(!marked[index]) {return null;}
@@ -122,6 +142,9 @@ public class FlightMap {
 		return path;
 	}
 
+	/**
+	* creates a node for each city in the graph
+	*/
 	
 	private void createCity(String city) {
 		 if(!mapping.containsKey(city))
@@ -134,7 +157,9 @@ public class FlightMap {
 	        }
 		
 	}
-	
+	/**
+	* creates an edge between two nodes in graph and stores the cost
+	*/
 	private void createFlight(String city1, String city2, int value) {
 		//get both indexes
         int index1 = mapping.get(city1);
@@ -145,6 +170,9 @@ public class FlightMap {
         ListOfList.get(index1).add(dv);
 		
 	}
+	/**
+	* returns the cost of the edge between two nodes
+	*/
 	private Integer getFlightValue(String city1, String city2) {
 		//gets the cost of flight
 		Integer index1 = mapping.get(city1);
@@ -162,72 +190,147 @@ public class FlightMap {
 	
 	
 	//Getters and setters for class variables 
-	
+	/**
+	* getter for a HashMap
+	*/
 	public static HashMap<String, Integer> getMapping() {
 		return mapping;
 	}
+	/**
+	* setter for a HashMap
+	*/
 	public static void setMapping(HashMap<String, Integer> mapping) {
 		FlightMap.mapping = mapping;
 	}
+	/**
+	* getter for a HashMap which stores reverse of directed edges in map
+	*/
 	public HashMap<Integer, String> getReverseMapping() {
 		return reverseMapping;
 	}
+	/**
+	* setter for a HashMap which stores reverse of directed edges in map
+	*/
 	public void setReverseMapping(HashMap<Integer, String> reverseMapping) {
 		this.reverseMapping = reverseMapping;
 	}
 	
-	////test this!!!
+	/**
+	* getter for graph stored in Adjacency list
+	*/
 	public static ArrayList<ArrayList<DestAndValue>> getListOfList() {
 		return ListOfList;
 	}
+	/**
+	* setter for graph stored in Adjacency list
+	*/
 	public static void setListOfList(ArrayList<ArrayList<DestAndValue>> listOfList) {
 		ListOfList = listOfList;
 	}
+	
+	/**
+	* getter for list that stores all destinations
+	*/
 	public Vector<String> getDestinationStrings() {
 		return destinationStrings;
 	}
+	/**
+	* setter for list that stores all destinations
+	*/
 	public void setDestinationStrings(Vector<String> destinationStrings) {
 		this.destinationStrings = destinationStrings;
 	}
+	
+	/**
+	* getter for list that stores all paths to destinations
+	*/
 	public Vector<String> getPathFromDestination() {
 		return pathFromDestination;
 	}
+	
+	/**
+	* setter for list that stores all paths to destinations
+	*/
 	public void setPathFromDestination(Vector<String> pathFromDestination) {
 		this.pathFromDestination = pathFromDestination;
 	}
+	
+	/**
+	* getter for list that stores all costs of paths 
+	*/
 	public Vector<Integer> getCostFromDestination() {
 		return costFromDestination;
 	}
+	/**
+	* setter for list that stores all costs of paths 
+	*/
 	public void setCostFromDestination(Vector<Integer> costFromDestination) {
 		this.costFromDestination = costFromDestination;
 	}
+	
+	/**
+	* returns largest available id used to represent a node 
+	*/
 	public int getAvailableId() {
 		return availableId;
 	}
+	/**
+	* stores largest available id used to represent a node 
+	*/
 	public void setAvailableId(int availableId) {
 		this.availableId = availableId;
 	}
+	
+	/**
+	* getter for array that stores if node has a path
+	*/
 	public boolean[] getMarked() {
 		return marked;
 	}
+	/**
+	* setter for array that stores if node has a path
+	*/
 	public void setMarked(boolean[] marked) {
 		this.marked = marked;
 	}
+	
+	/**
+	* getter for array that stores a node's previous node in path
+	*/
 	public Integer[] getEdgeTo() {
 		return edgeTo;
 	}
+	
+	/**
+	* setter for array that stores a node's previous node in path
+	*/
 	public void setEdgeTo(Integer[] edgeTo) {
 		this.edgeTo = edgeTo;
 	}
+	
+	/**
+	* getter for cost variable
+	*/
 	public Integer getCost() {
 		return cost;
 	}
+	/**
+	* setter for cost variable
+	*/
 	public void setCost(Integer cost) {
 		this.cost = cost;
 	}
+	
+	/**
+	* getter for list of all flights
+	*/
 	public Vector<String> getFlightList() {
 		return FlightList;
 	}
+	
+	/**
+	* setter for list of all flights
+	*/
 	public void setFlightList(Vector<String> flightList) {
 		FlightList = flightList;
 	}

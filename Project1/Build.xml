@@ -37,6 +37,8 @@
 
 <!-- Generate javadocs for current project into docs dir -->
 <target name="doc" depends="init" description="generate documentation"> 
+	<path refid="classpath.test"/>
+
 <javadoc sourcepath= "${source.dir}" destdir= "${doc.dir}"/>
 </target>
 
@@ -59,53 +61,54 @@
 </target> 
 
 
-  <path id="classpath.test">
-    <pathelement location="lib/junit-4.12.jar"/>
-    <pathelement location="lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${bin.dir}"/>
-  </path>
+	  <path id="classpath.test">
+	    <pathelement location="lib/junit-4.12.jar"/>
+	    <pathelement location="lib/hamcrest-core-1.3.jar"/>
+	    <pathelement location="${bin.dir}/main"/>
+	  </path>
+		
+	 <target name="test-compile" depends="compile">
+	
+	    <javac srcdir="${source.dir}/test" destdir="${bin.dir}" includeantruntime="false">
+	        <classpath refid="classpath.test"/>
+	    </javac>
+	  </target>
+	  
+	  <target name="test" depends="test-compile">
+	    <junit  haltonfailure="yes" printsummary="on"  fork="true">
+	        <classpath>
+	          <path refid="classpath.test"/>
+	          <pathelement location="${bin.dir}"/>
+	        </classpath>
+	        <formatter type="brief" usefile="false" />
+	        <batchtest>
+	            <fileset dir="${source.dir}" includes="**/Test*.java"  />
+	        </batchtest>
+	    </junit>
+	  </target> 
 
- <target name="test-compile" depends="compile">
-    <mkdir dir="${bin.dir}/test"/>
-    <javac srcdir="${source.dir}/test" destdir="${bin.dir}/test" includeantruntime="false">
-        <classpath refid="classpath.test"/>
-    </javac>
-  </target>
-  
-  <target name="test" depends="test-compile">
-    <junit  haltonfailure="yes" printsummary="yes"  showoutput="true" fork="true">
-        <classpath>
-          <path refid="classpath.test"/>
-          <pathelement location="${bin.dir}/test"/>
-        </classpath>
-        <formatter type="brief" usefile="false" />
-        <batchtest>
-            <fileset dir="${source.dir}/test" includes="**/*Test.java" />
-        </batchtest>
-    </junit>
-  </target> 
-  
-<!--  <path id= "classpath">
-	<path location="lib">
-	<fileset dir= "lib" includes="*.jar"></fileset>
-	</path>
+	
+	
+	<!-- 	
+ <path id= "classpath">
+		<path location="lib">
+		<fileset dir= "lib" includes="*.jar"></fileset>	
+		</path>
+ 		<pathelement location="${bin.dir}/test"/>
 </path>
-
-
-
- <target name="test-compile" depends="compile">
-   <javac classpathref="classpath" srcdir="${source.dir}/test" destdir="${bin.dir}" includeantruntime="false">
-    </javac>
- </target>
-  
-  <target name= "test" depends="test-compile">
-  <junit haltonfailure= "false" printsummary="true">
-  <classpath refid = "classpath">   </classpath>
-  <test name="src/test/TestDestAndValue"></test>
-  <test name="src/test/TestFlightMap"></test>
-  <test name="src/test/TestVectorClass"></test>
-
-  </junit>
-  </target> --> 
-  
+	 <target name="test-compile" depends="compile">
+	 <mkdir dir="${bin.dir}/test"/>
+	   <javac  srcdir="${source.dir}/test" destdir="${bin.dir}/test" includeantruntime="false">
+	    </javac>
+	 </target>
+	  
+	  <target name= "test" depends="test-compile">
+	  <junit classpathref="classpath"  haltonfailure= "false" printsummary="true">
+	  <classpath refid = "classpath">   </classpath>
+	  <test name="src/test/TestDestAndValue"></test>
+	  <test name="src/test/TestFlightMap"></test>
+	  <test name="src/test/TestVectorClass"></test>
+	  </junit>
+	  </target> 
+	  -->  
 </project>
