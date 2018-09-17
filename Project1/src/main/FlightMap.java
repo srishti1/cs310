@@ -84,7 +84,7 @@ public class FlightMap {
 	}
 	private String reverse(String word) {
 	    char[] chs = word.toCharArray();
-
+//reverses the path to get them in right order
 	    int i=0, j=chs.length-1;
 	    while (i < j) {
 	        char t = chs[i];
@@ -146,6 +146,7 @@ public class FlightMap {
 		
 	}
 	private Integer getFlightValue(String city1, String city2) {
+		//gets the cost of flight
 		Integer index1 = mapping.get(city1);
         Integer index2 = mapping.get(city2);
         ArrayList<DestAndValue> arr= ListOfList.get(index1);
@@ -174,6 +175,8 @@ public class FlightMap {
 	public void setReverseMapping(HashMap<Integer, String> reverseMapping) {
 		this.reverseMapping = reverseMapping;
 	}
+	
+	////test this!!!
 	public static ArrayList<ArrayList<DestAndValue>> getListOfList() {
 		return ListOfList;
 	}

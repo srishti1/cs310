@@ -9,15 +9,19 @@ public class DestAndValue {
 	}
 	public Integer getDestination() {
 		return Destination;
+		//getter for destination
 	}
 	public void setDestination(int destination) {
 		Destination = destination;
+		//setter for destination
 	}
 	public Integer getValue() {
+		//getter for value
 		return Value;
 	}
 	public void setValue(int value) {
 		Value = value;
+		//setter for value
 	}
 	
 

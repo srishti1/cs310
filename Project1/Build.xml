@@ -37,7 +37,7 @@
 
 <!-- Generate javadocs for current project into docs dir -->
 <target name="doc" depends="init" description="generate documentation"> 
-<javac srcdir= "${source.dir}" destdir= "${doc.dir}"/>
+<javadoc sourcepath= "${source.dir}" destdir= "${doc.dir}"/>
 </target>
 
 
@@ -73,7 +73,7 @@
   </target>
   
   <target name="test" depends="test-compile">
-    <junit  haltonfailure="yes" printsummary="true" fork="true">
+    <junit  haltonfailure="yes" printsummary="yes"  showoutput="true" fork="true">
         <classpath>
           <path refid="classpath.test"/>
           <pathelement location="${bin.dir}/test"/>
