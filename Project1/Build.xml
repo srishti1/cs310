@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Project1" default="compile" basedir="." >
+
+<!-- global properties for this build file -->
+<property name="source.dir" location="src" />
+<property name="bin.dir" location="bin" /> 
+<property name="doc.dir" location="doc" /> 
+<property name="lib.dir" location ="lib" />
+<property name="dist.dir" location="dist" /> 
+<property name="tests.dir" location="tests" />  
+
+
+<!-- Compile the java code in src dir into bin dir -->
+<target name="compile" depends="init" description="compile java sources">
+<javac  includeantruntime="false"  srcdir= "${source.dir}" destdir= "${bin.dir}"/>
+</target>
+
+<path id= "classpath">
+	<path location="lib">
+	<fileset dir= "lib" includes="*.jar"></fileset>
+	</path>
+</path>
+
+ <target name="test-compile" depends="compile">
+   <javac classpathref="classpath" srcdir="${tests.dir}" destdir="${bin.dir}" includeantruntime="false">
+    </javac>
+ </target>
+  
+  <target name= "test" depends="test-compile">
+  <junit haltonfailure= "false" printsummary="true">
+  <classpath refid = "classpath">   </classpath>
+  <test name="tests/main/TestDestAndValue"></test>
+  <test name="tests/main/TestFlightMap"></test>
+  <test name="tests/main/TestVectorClass"></test>
+
+  </junit>
+  </target>
+  
+
+<!-- set up some directories used by this project -->
+<target name="init" description="setup project directories">
+<mkdir dir= "${bin.dir}"/>
+<mkdir dir= "${dist.dir}"/>
+<mkdir dir= "${doc.dir}"/>
+
+
+</target>
+
+<target name="dist" depends="compile"
+        description="generate the distribution">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist.dir}/Project1-src.jar" basedir="${bin.dir}"/>
+  </target>
+
+
+
+<!-- Generate javadocs for current project into docs dir -->
+<target name="doc" depends="init" description="generate documentation"> 
+<javac srcdir= "${source.dir}" destdir= "${doc.dir}"/>
+</target>
+
+
+
+<!-- Delete the build & doc directories and Emacs backup (*~) files -->
+<target name="clean" description="tidy up the workspace"> 
+<delete dir ="${bin.dir}"/>
+<delete dir ="${doc.dir}"/>
+<delete dir ="${dist.dir}"/>
+</target>
+
+
+
+
+<target name="run" depends="compile">
+<java classname= "main.SearchMap">
+<classpath path="${bin.dir}"/>
+</java>
+</target> 
+
+</project>
