@@ -1,49 +1,55 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
+import main.FlightMap;
+import main.VectorClass;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.Stack;
 import java.util.Vector;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+
 
 import main.VectorClass;
 
-class TestVectorClass {
+public  class TestVectorClass {
 	private static final String AssertionError = null;
 	VectorClass vec;
 
 	@Test
-	void testCostFromDestination() {
+	public void testCostFromDestination() {
 		vec = new VectorClass();
 		Vector<Integer> costVec = new Vector<Integer> ();
 		costVec.add(1);
 		costVec.add(2);
 		vec.setCostFromDestination(costVec);
-		assertIterableEquals(costVec, vec.getCostFromDestination());
+		assertEquals(costVec.get(0), vec.getCostFromDestination().get(0));
 	
 	}
 
 	@Test
-	void testGetPathFromDestination() {
+	public  void testGetPathFromDestination() {
 		vec = new VectorClass();
 		Vector<String> pathFromDest = new Vector<String>();
 		pathFromDest.add("ABC");
 		pathFromDest.add("EFG");
 		vec.setPathFromDestination(pathFromDest);
 		//assertIterableEquals(pathFromDest, vec.getPathFromDestination());
-		assertIterableEquals(pathFromDest, vec.getPathFromDestination());
+		assertEquals(pathFromDest.get(0), vec.getPathFromDestination().get(0));
 
 	}
 	
 	@Test
-	void testGetDestinationStrings() {
+	public void testGetDestinationStrings() {
 		vec = new VectorClass();
 		Vector<String> destStrings = new Vector<String> ();
 		destStrings.add("ABC");
 		destStrings.add("EFG");
 		vec.setDestinationStrings(destStrings);
-		assertIterableEquals(destStrings, vec.getDestinationStrings());
+		assertEquals(destStrings.get(0), vec.getDestinationStrings().get(0));
 		
 	}	
 

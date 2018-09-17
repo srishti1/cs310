@@ -1,22 +1,22 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.Stack;
 import java.util.Vector;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 import main.FlightMap;
 import main.VectorClass;
 
-class TestFlightMap {
+public class TestFlightMap {
 	FlightMap flightMap;
 	
 	@Test
-	void testBuildGraph(){
+	public void testBuildGraph(){
 		Vector<String> flights = new Vector<String>();
 		flights.add("A");
 		flights.add("A B 200");
